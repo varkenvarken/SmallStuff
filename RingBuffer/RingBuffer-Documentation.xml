@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RingBuffer</name>
+    </assembly>
+    <members>
+        <member name="T:ExtraContainers.RingBuffer`1">
+            <summary>
+            A RingBuffer is a circular list with a fixed capacity.
+            Adding more items to the RingBuffer than its capacity will overwrite the the oldest item.
+            </summary>
+            <typeparam name="T">The type of the items in the RingBuffer</typeparam>
+            <seealso cref="M:ExtraContainers.RingBuffer`1.GetEnumerator">
+            All items in a RingBuffer can be iterated over from oldest to newest by using the enumerator returned by the GetEnumerator method, which allows for the standard foreach syntax.
+            </seealso>
+            <seealso cref="M:ExtraContainers.RingBuffer`1.GetReverseEnumerator">
+            It is also possible to iterate over the items from newest to oldest with the enumerator returned by the GetReverseEnumerator method.
+            </seealso>
+            <seealso cref="P:ExtraContainers.RingBuffer`1.Item(System.Int32)">
+            </seealso>
+            <example>The following example adds 10 ints to a RingBuffer with a capacity for 5. The it lists the contents from oldest to newest:
+            <code>
+            var rb = new RingBuffer&lt;int&gt;(5);
+            for(int i=0; i&lt;10; i++){ rb.Add(i); }
+            foreach(var item in rb){ Console.WriteLine(item); }
+            </code>
+            The result will look like this:
+            <code>
+            6
+            7
+            8
+            9
+            10
+            </code>
+            </example>
+        </member>
+        <member name="F:ExtraContainers.RingBuffer`1.defaultcapacity">
+            <summary>
+            Constructors specifying no initial capacity or a capacity smaller than this default will be set to the defaultcapacity. 
+            There is no provision the alter the capacity afterwards.
+            </summary>
+        </member>
+        <member name="M:ExtraContainers.RingBuffer`1.#ctor">
+            <summary>
+            Create an empty RingBuffer with a default capacity.
+            </summary>
+        </member>
+        <member name="M:ExtraContainers.RingBuffer`1.#ctor(System.Int32)">
+            <summary>
+            Create an empty RingBuffer with a given capacity.
+            </summary>
+            <param name="capacity">The apacity of the RingBuffer. Capacities smaller than the default capacity will set to the default.</param>
+        </member>
+        <member name="M:ExtraContainers.RingBuffer`1.Add(`0)">
+            <summary>
+            Add an item at the current position of a RingBuffer.
+            </summary>
+            <param name="item">The item to add</param>
+        </member>
+        <member name="M:ExtraContainers.RingBuffer`1.GetEnumerator">
+            <summary>
+            Return a forward iterator over the contents of the Ringbuffer.
+            A forward iterator returns all items from the oldest to the newest.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExtraContainers.RingBuffer`1.GetReverseEnumerator">
+            <summary>
+            Return a reverse iterator over the contents of the Ringbuffer.
+            A reverse iterator returns all items from the newest to the oldest.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ExtraContainers.RingBuffer`1.Item(System.Int32)">
+            <summary>
+            Return an element relative to the newest. Positive indices will index towards increasingly older items,
+            while negative indices will index towards newer items, i.e. -1 refers to the oldest, -2 the second oldest, ...
+            </summary>
+            <param name="i">The index.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
