@@ -25,8 +25,12 @@
     <CppCommentsFixup>False</CppCommentsFixup>
     <CleanIntermediates>True</CleanIntermediates>
     <DocumentationSources>
-      <DocumentationSource sourceFile="RingBuffer\bin\Debug\RingBuffer.dll" />
+      <DocumentationSource sourceFile="RingBuffer\bin\Release\RingBuffer.dll" />
 <DocumentationSource sourceFile="RingBuffer\RingBuffer-Documentation.xml" /></DocumentationSources>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" />
+<NamespaceSummaryItem name="ExtraContainers" isDocumented="True">ExtraContainers is intended as a namespace for specialized containers.</NamespaceSummaryItem></NamespaceSummaries>
+    <MissingTags>Summary, Parameter, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

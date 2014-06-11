@@ -1,21 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpTOC>
 
-  <HelpTOCNode Id="d104b83d-508e-472b-8011-758194b1345c" Title="ExtraContainers" Url="html/877f88d3-99a7-a13a-748e-0139bce1d227.htm">
-    <HelpTOCNode Id="0bfeaf03-fec5-42ee-a68f-e518191fa8a9" Title="RingBuffer(T) Class" Url="html/746d5730-a1a2-13de-fa87-66d8a1a57b20.htm">
-      <HelpTOCNode Id="6c53f41d-9afc-474c-bddb-7ea22742f5b6" Title="RingBuffer(T) Constructor " Url="html/9ec625f3-5fa6-f39f-3ec8-6fd0adfb98c0.htm">
+  <HelpTOCNode Id="f3861935-92dd-43d2-a0b5-ccf04c6a111b" Title="ExtraContainers" Url="html/877f88d3-99a7-a13a-748e-0139bce1d227.htm">
+    <HelpTOCNode Id="3acd29ef-6262-4afb-b447-7a92c23ff32c" Title="RingBuffer(T) Class" Url="html/746d5730-a1a2-13de-fa87-66d8a1a57b20.htm">
+      <HelpTOCNode Id="65b5f0a5-f824-47dd-b068-cbceeda0a29c" Title="RingBuffer(T) Constructor " Url="html/9ec625f3-5fa6-f39f-3ec8-6fd0adfb98c0.htm">
         <HelpTOCNode Title="RingBuffer(T) Constructor " Url="html/0966eb84-f733-1e1c-0fbc-4a23517cef0e.htm" />
         <HelpTOCNode Title="RingBuffer(T) Constructor (Int32)" Url="html/b24b7771-15ac-ea61-b082-b164b7773df2.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="c557bde0-be44-4655-8743-9735b033acbb" Title="RingBuffer(T) Fields" Url="html/3a835de9-449b-9d09-cd8d-bb4888d2b283.htm">
+      <HelpTOCNode Id="a46b341f-8793-469f-bf8d-5bccc1a5ad16" Title="RingBuffer(T) Fields" Url="html/3a835de9-449b-9d09-cd8d-bb4888d2b283.htm">
         <HelpTOCNode Title="defaultcapacity Field" Url="html/aa868561-7da2-e64d-647a-a8f4302f0ae8.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="2c997389-15c8-4f79-a22e-0043f54a2b31" Title="RingBuffer(T) Methods" Url="html/7496650f-8040-d1e0-4875-d0b534058926.htm">
+      <HelpTOCNode Id="0c84bcc4-e09c-461a-a60a-65a920a3fdb1" Title="RingBuffer(T) Methods" Url="html/7496650f-8040-d1e0-4875-d0b534058926.htm">
         <HelpTOCNode Title="Add Method " Url="html/a1a2a694-0f6d-a811-44bc-f0eda5ccf2bd.htm" />
         <HelpTOCNode Title="GetEnumerator Method " Url="html/50238f13-33a9-81af-47c0-372618905baa.htm" />
         <HelpTOCNode Title="GetReverseEnumerator Method " Url="html/f176eb20-ceda-26c1-8dcf-4a928c731c88.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Title="RingBuffer(T) Properties" Url="html/aeebd5eb-de81-66d0-c8b8-3555ddd2609a.htm" />
+      <HelpTOCNode Id="4e9e7818-de89-4f7c-a64c-4efa63819668" Title="RingBuffer(T) Properties" Url="html/aeebd5eb-de81-66d0-c8b8-3555ddd2609a.htm">
+        <HelpTOCNode Title="Capacity Property " Url="html/e014028e-f8eb-308d-608f-7847935f7a2a.htm" />
+        <HelpTOCNode Title="Count Property " Url="html/65b814c0-62f5-f74f-7eb1-ed5764225cf0.htm" />
+        <HelpTOCNode Title="Item Property " Url="html/5f6c5231-e568-0e86-e5e2-5fb8a86d559b.htm" />
+      </HelpTOCNode>
     </HelpTOCNode>
   </HelpTOCNode>
 </HelpTOC>

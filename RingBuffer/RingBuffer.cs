@@ -23,6 +23,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// ExtraContainers is intended as a namespace for specialized containers.
+/// </summary>
 namespace ExtraContainers
 {
     /// <summary>
@@ -53,7 +56,7 @@ namespace ExtraContainers
     /// 10
     /// </code>
     /// </example>
-    public class RingBuffer<T> : List<T>
+    public class RingBuffer<T> : IEnumerable<T>, IEnumerable
     {
         /// <summary>
         /// Constructors specifying no initial capacity or a capacity smaller than this default will be set to the defaultcapacity. 
@@ -62,33 +65,45 @@ namespace ExtraContainers
         public static readonly int defaultcapacity = 4; // readonly instead of const, see http://stackoverflow.com/questions/13150343/the-constant-cannot-be-marked-static
 
         private int cursor = 0;
-
+        
+        private List<T> buffer;
+        
         /// <summary>
         /// Create an empty RingBuffer with a default capacity.
         /// </summary>
-        public RingBuffer() : base(defaultcapacity){}
+        public RingBuffer() { buffer = new List<T>(defaultcapacity); }
 
         /// <summary>
         /// Create an empty RingBuffer with a given capacity.
         /// </summary>
         /// <param name="capacity">The apacity of the RingBuffer. Capacities smaller than the default capacity will set to the default.</param>
-        public RingBuffer(int capacity) : base(capacity>defaultcapacity?capacity:defaultcapacity) { }
+        public RingBuffer(int capacity) { buffer = new List<T>(capacity > defaultcapacity ? capacity : defaultcapacity); }
+
+        /// <summary>
+        /// The number of items in the RingBuffer.
+        /// </summary>
+        public int Count { get { return buffer.Count;} }
+
+        /// <summary>
+        /// The maximum number of items in the RingBuffer.
+        /// </summary>
+        public int Capacity { get { return buffer.Capacity; } }
 
         /// <summary>
         /// Add an item at the current position of a RingBuffer.
         /// </summary>
         /// <param name="item">The item to add</param>
-        public new void Add(T item)
+        public void Add(T item)
         {
-            if (this.Count == this.Capacity)
+            if (Count == Capacity)
             {
-                base[cursor] = item;
+                buffer[cursor] = item;
             }
             else
             {
-                base.Add(item);
+                buffer.Add(item);
             }
-            cursor = (cursor + 1) % this.Capacity;
+            cursor = (cursor + 1) % Capacity;
         }
 
         /// <summary>
@@ -96,20 +111,20 @@ namespace ExtraContainers
         /// A forward iterator returns all items from the oldest to the newest.
         /// </summary>
         /// <returns></returns>
-        public new IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             int end = Count;
             if (Count >= Capacity)
             {
                 for (int i = cursor; i < Count; i++)
                 {
-                    yield return base[i];
+                    yield return buffer[i];
                 }
                 end = cursor;
             }
             for (int i = 0; i < end; i++)
             {
-                yield return base[i];
+                yield return buffer[i];
             }
         }
 
@@ -125,14 +140,24 @@ namespace ExtraContainers
             {
                 for (int i = cursor - 1; i >= 0; i--)
                 {
-                    yield return base[i];
+                    yield return buffer[i];
                 }
                 end = cursor;
             }
             for (int i = Count - 1; i >= end; i--)
             {
-                yield return base[i];
+                yield return buffer[i];
             }
+        }
+
+        /// <summary>
+        /// This is just to satisfy the IEnumerable interface, necessary for any foreach syntactic sugar to work
+        /// see: http://stackoverflow.com/questions/2981615/error-message-regarding-ienumerable-getenumerator
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         /// <summary>
@@ -141,13 +166,13 @@ namespace ExtraContainers
         /// </summary>
         /// <param name="i">The index.</param>
         /// <returns></returns>
-        public new T this[int i]
+        public T this[int i]
         {
             get {
                 int m = Count < Capacity ? Count : Capacity;
                 int p = (cursor - 1 - i)%m; // % is a remainder, not a modulo op, see http://stackoverflow.com/questions/1082917/mod-of-negative-number-is-melting-my-brain
                 if (p < 0) p += m;
-                return base[p];
+                return buffer[p];
             }
         }
     }

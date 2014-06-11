@@ -71,6 +71,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ExtraContainers.RingBuffer`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            This is just to satisfy the IEnumerable interface, necessary for any foreach syntactic sugar to work
+            see: http://stackoverflow.com/questions/2981615/error-message-regarding-ienumerable-getenumerator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ExtraContainers.RingBuffer`1.Count">
+            <summary>
+            The number of items in the RingBuffer.
+            </summary>
+        </member>
+        <member name="P:ExtraContainers.RingBuffer`1.Capacity">
+            <summary>
+            The maximum number of items in the RingBuffer.
+            </summary>
+        </member>
         <member name="P:ExtraContainers.RingBuffer`1.Item(System.Int32)">
             <summary>
             Return an element relative to the newest. Positive indices will index towards increasingly older items,
