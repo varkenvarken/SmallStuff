@@ -23,120 +23,88 @@
 #include <exception>
 using namespace std;
 
-/// <summary>
 /// ExtraContainers is intended as a namespace for specialized containers.
-/// </summary>
 namespace ExtraContainers
 {
-	/// <summary>
-	/// A RingBuffer is a circular list with a fixed capacity.
-	/// Adding more items to the RingBuffer than its capacity will overwrite the the oldest item.
-	/// </summary>
-	/// <typeparam name="T">The type of the items in the RingBuffer</typeparam>
-	/// <seealso cref="GetEnumerator">
-	/// All items in a RingBuffer can be iterated over from oldest to newest by using the enumerator returned by the GetEnumerator method, which allows for the standard foreach syntax.
-	/// </seealso>
-	/// <seealso cref="GetReverseEnumerator">
-	/// It is also possible to iterate over the items from newest to oldest with the enumerator returned by the GetReverseEnumerator method.
-	/// </seealso>
-	/// <seealso cref="this">
-	/// </seealso>
-	/// <example>The following example adds 10 ints to a RingBuffer with a capacity for 5. The it lists the contents from oldest to newest:
-	/// <code>
-	/// var rb = new RingBuffer&lt;int>(5);
-	/// for(int i=0; i&lt;10; i++){ rb.Add(i); }
-	/// foreach(var item in rb){ Console.WriteLine(item); }
-	/// </code>
-	/// The result will look like this:
-	/// <code>
-	/// 6
-	/// 7
-	/// 8
-	/// 9
-	/// 10
-	/// </code>
-	/// </example>
-
-
 	template<class T, size_t N>
 	class RingBuffer
 	{
 
 	private:
-		class iterator
+		class base_iterator
 		{
 		public:
-			typedef iterator self_type;
+			typedef base_iterator self_type;
 			typedef T value_type;
 			typedef T& reference;
 			typedef T* pointer;
-			typedef std::forward_iterator_tag iterator_category;
 			typedef int difference_type;
-			// begin
-			iterator(pointer start, pointer begin, pointer end) : start_(start), begin_(begin), end_(end) { 
-				clamp(start_); 
-				ptr_ = (end_ != begin_) ? start_ : nullptr ;
-			}
-			// end
-			iterator(): ptr_(nullptr){}
-			// post inc
-			self_type operator++() { self_type i = *this; ptr_++; roll(ptr_); return i; }
-			// pre inc
-			self_type operator++(int junk) { ptr_++; roll(ptr_);  return *this; }
-			reference operator*() { return *ptr_; }
-			pointer operator->() { return ptr_; }
-			bool operator==(const self_type& rhs) { return ptr_ == rhs.ptr_; }
-			bool operator!=(const self_type& rhs) { return ptr_ != rhs.ptr_; }
+			base_iterator(RingBuffer &buffer, bool begin, bool reverse) :
+				buffer_(buffer),
+				current_(begin ? (reverse ? 0 : buffer.Count() - 1) : (reverse ? buffer.Count() : -1))
+			{}
+			reference operator*() { return buffer_[current_]; }
+			pointer operator->() { return &(buffer_[current_]); }
+			bool operator==(const self_type& rhs) { return current_ == rhs.current_; }
+			bool operator!=(const self_type& rhs) { return current_ != rhs.current_; }
 
-		private:
-			void roll(pointer &p){ if (p >= end_) p = begin_; if (p == start_) p = nullptr; }
-			void clamp(pointer &p){ if (p < begin_) p = end_ - 1; else if (p >= end_) p = begin_ ; }
-			pointer ptr_, start_, begin_, end_;
+		protected:
+			int current_;
+			RingBuffer &buffer_;
+		};
+
+		class reverse_iterator : public base_iterator
+		{
+		public:
+			typedef reverse_iterator self_type;
+			reverse_iterator(RingBuffer &buffer, bool begin) : base_iterator(buffer, begin, true) {}
+			self_type operator++() { current_++; return *this; }
+			self_type operator++(int dummy) { auto tmp = *this; current_++; return tmp; }
+		};
+
+		class iterator : public base_iterator
+		{
+		public:
+			typedef iterator self_type;
+			iterator(RingBuffer &buffer, bool begin) : base_iterator(buffer, begin, false) {}
+			self_type operator++() { current_--; return *this; }
+			self_type operator++(int dummy) { auto tmp = *this; current_--; return tmp; }
 		};
 
 		array<T, N> buffer;
 		size_t cursor = 0;
 		size_t count = 0;
-	public: RingBuffer(){ if (N == 0) throw exception("0 length RingBuffer"); }
-		/// <summary>
-		/// The number of items in the RingBuffer.
-		/// </summary>
-	public: size_t Count(){ return count; }
 
-		/// <summary>
-		/// The maximum number of items in the RingBuffer.
-		/// </summary>
-	public: size_t Capacity(){ return N; }
-
-		/// <summary>
-		/// Add an item at the current position of a RingBuffer.
-		/// </summary>
-		/// <param name="item">The item to add</param>
-	public: void Add(T item)
-	{
-		if (Count() < Capacity()) count++;
-		buffer[cursor] = item;
-		cursor = (cursor + 1) % Capacity();
-	}
-
-		/// <summary>
-		/// Return a forward iterator over the contents of the Ringbuffer.
-		/// A forward iterator returns all items from the oldest to the newest.
-		/// </summary>
-		/// <returns></returns>
-	public: iterator begin(){
-		T* base = &(buffer[0]);
-		if (Count() < Capacity()){
-			return iterator(base, base, base +cursor);
+	public: 
+		RingBuffer(){ if (N == 0) throw exception("0 length RingBuffer"); }
+		size_t Count(){ return count; }
+		int Oldest() { return count ? -(int)count + 1 : 0; }
+		size_t Capacity(){ return N; }
+		void Add(T item)
+		{
+			if (Count() < Capacity()) count++;
+			buffer[cursor] = item;
+			cursor = (cursor + 1) % Capacity();
 		}
-		else{
-			return iterator(base + cursor, base, base + Capacity());
+		iterator begin(){ return iterator(*this, true); }
+		iterator end(){ return iterator(*this, false);}
+		reverse_iterator rbegin(){ return reverse_iterator(*this, true); }
+		reverse_iterator rend(){ return reverse_iterator(*this, false);	}
+		T& operator[](int i){ // not size_t, we need a signed index to specify positions relative to the oldest element
+			return index(i);
 		}
-	}
+		const T& operator[](int i) const{
+			return index(i);
+		}
 
-	public: iterator end(){
-		return iterator();
-	}
+	private: 
+		T& index(int i){
+			int m = Count() < Capacity() ? Count() : Capacity();
+			if (i < 0) i = -(m + i);
+			int p = ((int)cursor - 1 - i) % m; // % is a remainder, not a modulo op, see http://stackoverflow.com/questions/1082917/mod-of-negative-number-is-melting-my-brain
+			if (p < 0) p += m;
+			return buffer[p];
+		}
 
 	};
 };

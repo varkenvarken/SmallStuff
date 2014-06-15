@@ -50,23 +50,23 @@ namespace RingBufferTest
 
         static void Main(string[] args)
         {
-            var rb = new RingBuffer<int>(4);
+            var rb = new RingBuffer<int>(5);
             Dump(ref rb);
-            for (int i = 1; i <= 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 rb.Add(i);
                 Dump(ref rb);
                 Dump(ref rb, true);
             }
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < rb.Count; i++)
                 Console.WriteLine("{0} {1} -{0} {2}",i, rb[i],rb[-i]);
-            for (int i = 3; i <= 10; i++)
+            for (int i = 3; i <= 11; i++)
             {
                 rb.Add(i);
                 Dump(ref rb);
                 Dump(ref rb, true);
             }
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < rb.Count; i++)
                 Console.WriteLine("{0} {1} -{0} {2}", i, rb[i], rb[-i]);
         }
     }
