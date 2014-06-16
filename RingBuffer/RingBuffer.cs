@@ -23,9 +23,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// ExtraContainers is intended as a namespace for specialized containers.
-/// </summary>
 namespace ExtraContainers
 {
     /// <summary>
@@ -175,5 +172,7 @@ namespace ExtraContainers
                 return buffer[p];
             }
         }
+
+
     }
 }

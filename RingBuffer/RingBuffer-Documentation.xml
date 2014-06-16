@@ -96,5 +96,25 @@
             <param name="i">The index.</param>
             <returns></returns>
         </member>
+        <member name="T:ExtraContainers.RingBufferSelector`1">
+            <summary>
+            A RingBuffer that provides an extra iterator that will return those items that match a certain condition
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:ExtraContainers.RingBufferSelector`1.GetSelector(ExtraContainers.RingBufferSelector{`0}.predicate)">
+            <summary>
+            returns items that match a certain condition, from oldest to newest.
+            </summary>
+            <param name="selector">a delegate to match items</param>
+            <returns></returns>
+        </member>
+        <member name="T:ExtraContainers.RingBufferSelector`1.predicate">
+            <summary>
+            A function that takes an item as argument and returns true if it matches a condition.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

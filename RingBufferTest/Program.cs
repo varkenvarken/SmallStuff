@@ -27,7 +27,7 @@ namespace RingBufferTest
 {
     class Program
     {
-        static void Dump<T>(ref RingBuffer<T> rb, bool reverse = false)
+        static void Dump<T>(ref RingBufferSelector<T> rb, bool reverse = false)
         {
             if (reverse)
             {
@@ -47,27 +47,36 @@ namespace RingBufferTest
             Console.WriteLine("");
         }
 
+        static bool even(int number) { return number % 2 == 0; }
 
         static void Main(string[] args)
         {
-            var rb = new RingBuffer<int>(5);
+            var rb = new RingBufferSelector<int>(5);
             Dump(ref rb);
             for (int i = 0; i < 3; i++)
             {
                 rb.Add(i);
-                Dump(ref rb);
-                Dump(ref rb, true);
             }
-            for (int i = 0; i < rb.Count; i++)
-                Console.WriteLine("{0} {1} -{0} {2}",i, rb[i],rb[-i]);
+            Dump(ref rb);
+            Dump(ref rb, true);
+            //for (int i = 0; i < rb.Count; i++)
+            //    Console.WriteLine("{0} {1} -{0} {2}",i, rb[i],rb[-i]);
             for (int i = 3; i <= 11; i++)
             {
                 rb.Add(i);
-                Dump(ref rb);
-                Dump(ref rb, true);
             }
-            for (int i = 0; i < rb.Count; i++)
-                Console.WriteLine("{0} {1} -{0} {2}", i, rb[i], rb[-i]);
+            Dump(ref rb);
+            Dump(ref rb, true);
+            //for (int i = 0; i < rb.Count; i++)
+            //    Console.WriteLine("{0} {1} -{0} {2}", i, rb[i], rb[-i]);
+
+            var se = rb.GetSelector(even);
+            while(se.MoveNext())
+            {
+                Console.Write("{0} ", se.Current);
+            }
+
+            Console.ReadLine();
         }
     }
 }
