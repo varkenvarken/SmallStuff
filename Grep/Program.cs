@@ -152,7 +152,7 @@ Options:
                         Match m = r.Match(line);
                         if (m.Success)
                         {
-                            for (int n = before; n >= 0; n--) // 0 is the recently matched line itself
+                            for (int n = Math.Min(before,lines.Count-1); n >= 0; n--) // 0 is the recently matched line itself
                             {
                                 if (!printed[n])
                                 {
