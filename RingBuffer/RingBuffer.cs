@@ -59,7 +59,7 @@ namespace ExtraContainers
         /// Constructors specifying no initial capacity or a capacity smaller than this default will be set to the defaultcapacity. 
         /// There is no provision the alter the capacity afterwards.
         /// </summary>
-        public static readonly int defaultcapacity = 4; // readonly instead of const, see http://stackoverflow.com/questions/13150343/the-constant-cannot-be-marked-static
+        public static readonly int defaultcapacity = 1; // readonly instead of const, see http://stackoverflow.com/questions/13150343/the-constant-cannot-be-marked-static
 
         private int cursor = 0;
         
@@ -75,6 +75,11 @@ namespace ExtraContainers
         /// </summary>
         /// <param name="capacity">The apacity of the RingBuffer. Capacities smaller than the default capacity will set to the default.</param>
         public RingBuffer(int capacity) { buffer = new List<T>(capacity > defaultcapacity ? capacity : defaultcapacity); }
+
+        /// <summary>
+        /// Remove all elements from the RingBuffer.
+        /// </summary>
+        public void Clear() { cursor = 0; buffer.Clear(); }
 
         /// <summary>
         /// The number of items in the RingBuffer.

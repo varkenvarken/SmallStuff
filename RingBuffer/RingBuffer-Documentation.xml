@@ -51,6 +51,11 @@
             </summary>
             <param name="capacity">The apacity of the RingBuffer. Capacities smaller than the default capacity will set to the default.</param>
         </member>
+        <member name="M:ExtraContainers.RingBuffer`1.Clear">
+            <summary>
+            Remove all elements from the RingBuffer.
+            </summary>
+        </member>
         <member name="M:ExtraContainers.RingBuffer`1.Add(`0)">
             <summary>
             Add an item at the current position of a RingBuffer.

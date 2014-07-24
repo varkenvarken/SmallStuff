@@ -172,6 +172,8 @@ Options:
                     }
                     f.Close();
                     f.Dispose();
+                    lines.Clear();
+                    printed.Clear();
                     #endregion
                 }
             }catch(IOException){
