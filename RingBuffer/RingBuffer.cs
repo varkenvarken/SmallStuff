@@ -171,6 +171,12 @@ namespace ExtraContainers
                 if (p < 0) p += m;
                 return buffer[p];
             }
+            set {
+                int m = Count < Capacity ? Count : Capacity;
+                int p = (cursor - 1 - i)%m;
+                if (p < 0) p += m;
+                buffer[p] = value;
+            }
         }
 
 
